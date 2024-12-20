@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Emergency Assistance App</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: #000;
+            overflow: hidden;
+            color: #fff;
+            font-size: 16px;
+            flex-direction: column;
+            padding-left: 0; /* To prevent unwanted space when sidebar is opened */
+        }
+
+        .navbar {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 40px 60px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+        }
+
+        .navbar h2 {
+            color: #ff4d4d;
+            font-size: 1.5rem;
+        }
+
+        .navbar .menu-toggle {
+            display: block;
+            background: none;
+            border: none;
+            color: #fff;
+            font-size: 2.5rem; /* Larger hamburger icon for better visibility */
+            cursor: pointer;
+        }
+
+        /* Navbar */
+        .navbar ul {
+            display: flex; /* Ensure the menu items are displayed horizontally */
+            list-style: none;
+        }
+
+        .navbar ul li {
+            margin-left: 20px; /* Space between items */
+        }
+
+        .navbar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 1.5rem; /* Increased font size */
+            font-weight: bold;
+            transition: color 0.3s;
+            padding: 10px 20px; /* Added padding for better spacing */
+        }
+
+        .navbar ul li a:hover {
+            color: #ff4d4d;
+        }
+
+        /* Sidebar */
+        /* Sidebar */
+.sidebar {
+    position: fixed;
+    top: 35px; /* Move the sidebar 35px down from the top */
+    left: -250px; /* Initially off-screen */
+    width: 250px;
+    height: calc(100% - 35px); /* Adjust the height to take into account the top gap */
+    background: rgba(0, 0, 0, 0.9);
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.6);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    transition: left 0.3s ease-in-out, top 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* Smoother transition */
+    z-index: 999;
+}
+
+.sidebar.active {
+    left: 0; /* When active, sidebar slides in */
+    top: 70px; /* Move the sidebar 70px from the top when active */
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    transition: color 0.3s;
+    padding: 15px 20px;
+    display: block;
+}
+
+.sidebar a:hover {
+    color: #ff4d4d;
+}
+
+/* To position the menu items */
+.sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* This will space the items evenly */
+    height: 100%; /* Make sure the sidebar takes full height */
+    padding: 20px 20px 50px; /* Adjust bottom padding to prevent overlap with Menu 3 */
+}
+
+.sidebar a:nth-child(1) {
+    margin-top: 0; /* Menu 1, directly under the hamburger icon */
+}
+
+.sidebar a:nth-child(2) {
+    margin-top: auto; /* Menu 2, centered */
+    margin-bottom: auto;
+}
+
+.sidebar a:nth-child(3) {
+    margin-bottom: 0; /* Menu 3, at the bottom */
+}
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.8);
+            border-radius: 20px;
+            padding: 40px;
+            width: 90%;
+            max-width: 400px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.6);
+            transform: translateY(-50%);
+            animation: slideUp 1s ease-out forwards;
+            margin-top: 100px; /* Navbar height padding */
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: #ff4d4d;
+            font-weight: 700;
+            margin-bottom: 15px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.3s forwards;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: #bbb;
+            margin-bottom: 30px;
+            opacity: 0;
+            animation: fadeIn 1.5s ease-out 0.6s forwards;
+        }
+
+        .button-container {
+            margin-top: 30px;
+        }
+
+        .emergency-button {
+            background: #e53946;
+            color: #fff;
+            border: none;
+            padding: 18px 25px;
+            border-radius: 12px;
+            font-size: 1.5rem;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        .emergency-button:hover {
+            background: #ff1744;
+            transform: scale(1.1);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+
+        .emergency-button:active {
+            transform: scale(1.05);
+            background: #d32f2f;
+        }
+
+        .footer {
+            margin-top: 25px;
+            font-size: 0.95rem;
+            color: #bbb;
+        }
+
+        .footer a {
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            0% {
+                transform: translateY(100%);
+            }
+            100% {
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar .menu-toggle {
+                display: block;
+            }
+
+            .navbar ul {
+                display: none;
+            }
+
+            .sidebar {
+                display: block;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .emergency-button {
+                font-size: 1.2rem;
+                padding: 15px 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <button class="menu-toggle">&#9776;</button> <!-- Hamburger icon on the left -->
+        <h2>Emergency App</h2>
+        <ul>
+            <li><a href="#">Main Page</a></li>
+            <li><a href="maps.html">Maps</a></li>
+            
+        </ul>
+    </div>
+
+    <div class="sidebar">
+        <a href="#">Main Page</a>
+        <a href="maps.html">Maps</a>
+        
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Emergency Assistance</h1>
+            <p>Click below to send an SOS signal. Help is on the way!</p>
+        </div>
+
+        <div class="button-container">
+            <button class="emergency-button">Send SOS Signal</button>
+        </div>
+
+        <div class="footer">
+            <p>Stay calm. <a href="#">Learn More</a></p>
+        </div>
+    </div>
+
+    <script>
+        const menuToggle = document.querySelector('.menu-toggle');
+        const sidebar = document.querySelector('.sidebar');
+
+        menuToggle.addEventListener('click', () => {
+            sidebar.classList.toggle('active'); // Toggle the sidebar
+        });
+    </script>
+</body>
+</html>
