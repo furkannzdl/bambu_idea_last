@@ -5,16 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>City Map</title>
     <style>
-        body {
+        body, html {
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f4f4;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+            height: 100%; /* Full height */
         }
 
         .navbar {
@@ -40,16 +34,19 @@
         }
 
         .map-container {
-            width: 60%; /* Adjust the size of the image */
-            height: auto;
-            margin-top: 80px; /* To prevent overlap with the navbar */
-            border: 2px solid #ccc;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            position: absolute; /* Absolute positioning to cover the page */
+            top: 80px; /* Space for the navbar */
+            left: 0;
+            right: 0;
+            bottom: 0; /* Take up remaining space */
+            width: 100%; /* Full width */
+            height: calc(100% - 80px); /* Full height minus navbar height */
         }
 
         .map-container img {
             width: 100%;
-            height: auto;
+            height: 100%;
+            object-fit: cover; /* Ensure image covers the container without distortion */
             display: block;
         }
     </style>
